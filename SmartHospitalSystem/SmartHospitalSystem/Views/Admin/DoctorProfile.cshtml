@@ -1,0 +1,143 @@
+﻿@model Hospital_Domain.Model.Doctor
+@{
+    ViewData["Title"] = "Doctor Profile";
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #0f4c75, #3282b8);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .profile-card {
+        max-width: 900px;
+        margin: 50px auto;
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    }
+
+    .profile-header {
+        display: flex;
+        padding: 30px;
+        background: linear-gradient(135deg, #0f4c75, #3282b8);
+        color: white;
+    }
+
+        .profile-header img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+        }
+
+    .profile-header-details {
+        margin-left: 30px;
+    }
+
+        .profile-header-details h2 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .profile-header-details span {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+    .profile-body {
+        padding: 30px;
+    }
+
+    .section {
+        margin-bottom: 25px;
+    }
+
+        .section h5 {
+            color: #0f4c75;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 6px;
+            margin-bottom: 15px;
+        }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        padding: 14px 18px;
+        border-radius: 10px;
+    }
+
+    .actions {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+        .actions a {
+            margin: 0 10px;
+        }
+</style>
+
+<div class="profile-card">
+
+    <!-- HEADER -->
+    <div class="profile-header">
+        <input type="hidden" asp-for="DoctorId" />
+        <img src="~/@Model.ProfileImagePath" />
+        <div class="profile-header-details">
+            <h2>@Model.Name</h2>
+            <span>@Model.Specialization</span><br />
+            <span>@Model.Email</span>
+        </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="profile-body">
+
+        <div class="section">
+            <h5>📋 Professional Details</h5>
+            <div class="info-grid">
+                <div class="info-box"><strong>Qualification:</strong> @Model.Qualification</div>
+                <div class="info-box"><strong>Experience:</strong> @Model.ExperienceYears Years</div>
+                <div class="info-box"><strong>Phone:</strong> @Model.PhoneNumber</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h5>⏰ Availability</h5>
+            <div class="info-grid">
+                <div class="info-box">
+                    <strong>From:</strong> @Model.AvailableFromDate?.ToString("dd MMM yyyy")
+                </div>
+                <div class="info-box">
+                    <strong>To:</strong> @Model.AvailableToDate?.ToString("dd MMM yyyy")
+                </div>
+                <div class="info-box">
+                    <strong>Time:</strong> @Model.AvailableFromTime - @Model.AvailableToTime
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+            @* <a asp-controller="Doctor"
+               asp-action="Profile"
+               asp-route-id="@Model.DoctorId"
+               class="btn btn-primary">
+                ✏ Edit Doctor
+            </a> *@
+          
+            <a asp-action="AllDoctors"
+               class="btn btn-secondary">
+                ← Back
+            </a>
+        </div>
+
+    </div>
+</div>

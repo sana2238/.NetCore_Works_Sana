@@ -1,0 +1,182 @@
+﻿@model IEnumerable<Hospital_Domain.Model.Appointment>
+
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<style>
+    body {
+        margin: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f4c75, #3282b8);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .dashboard {
+        max-width: 1000px;
+        margin: 60px auto;
+    }
+
+        .dashboard h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: .5px;
+        }
+
+    .card {
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(10px);
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0,0,0,.25);
+    }
+
+    table {
+        border-radius: 12px;
+        overflow: hidden;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: separate;
+    }
+
+        table th {
+            background: #ffe6e6; /* light pink background */
+            color: #1a1a1a; /* dark text for headings */
+            text-align: center;
+            font-weight: 700;
+            padding: 14px;
+        }
+
+        table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 14px;
+            word-wrap: break-word;
+        }
+
+    tr:hover td {
+        background: #f1f7ff;
+        transition: .2s;
+    }
+
+    .status-badge {
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .Pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .Completed {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .Cancelled {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .btn-primary {
+        margin-top: 25px;
+        border-radius: 12px;
+        padding: 10px 25px;
+        font-weight: 600;
+        color: #fff;
+        background: linear-gradient(90deg, #0f4c75, #3282b8);
+        border: none;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0c3a5a, #1f5a80);
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .fw-semibold {
+        font-weight: 600;
+    }
+
+    .fw-bold {
+        font-weight: 700;
+    }
+
+    .text-muted {
+        color: #6c757d;
+    }
+</style>
+
+<div class="dashboard">
+    <h2>📋 My Appointments</h2>
+
+    <div class="card">
+        @if (!Model.Any())
+        {
+            <p class="text-center fw-bold text-muted">
+                No appointments found.
+            </p>
+        }
+        else
+        {
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th style="width:25%">Doctor Name</th>
+                        <th style="width:25%">Appointment Date</th>
+                        <th style="width:30%">Symptoms</th>
+                        <th style="width:20%">Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-semibold">
+                                @(item.Doctor != null ? item.Doctor.Name : "Not Assigned")
+                            </td>
+
+                            <td>
+                                @(item.AppointmentDate.Year > 2000
+                                                        ? item.AppointmentDate.ToString("dd MMM yyyy | hh:mm tt")
+                                                        : "Not Scheduled")
+                    </td>
+
+                            <td>
+                                @(!string.IsNullOrEmpty(item.Symptoms) ? item.Symptoms : "—")
+                            </td>
+
+                            <td>
+                                <span class="status-badge @item.Status">
+                                    @item.Status
+                                </span>
+                            </td>
+                        </tr>
+                                }
+                </tbody>
+            </table>
+        }
+
+        <div class="text-center">
+            <a asp-controller="Patient"
+               asp-action="Profile"
+               class="btn-primary">
+                ⬅ Back to Profile
+            </a>
+        </div>
+    </div>
+</div>

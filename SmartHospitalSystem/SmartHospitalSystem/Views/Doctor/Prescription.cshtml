@@ -1,0 +1,115 @@
+﻿@model Hospital_Domain.Dtos.PrescriptionDto
+
+<style>
+    .prescription-wrapper {
+        max-width: 850px;
+        margin: 40px auto;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card {
+        border-radius: 18px;
+        box-shadow: 0 15px 35px rgba(0,0,0,.08);
+        border: none;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #0f4c75, #3282b8);
+        color: white;
+        padding: 20px;
+        font-size: 22px;
+        border-radius: 18px 18px 0 0;
+    }
+
+    label {
+        font-weight: 600;
+        margin-top: 15px;
+    }
+
+    textarea {
+        border-radius: 12px;
+        resize: none;
+    }
+
+    .btn-save {
+        background: #1363df;
+        border-radius: 30px;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .summary {
+        margin-top: 40px;
+        padding: 20px;
+        border-radius: 15px;
+        background: #f8f9fa;
+    }
+</style>
+
+<div class="prescription-wrapper">
+
+    <div class="card">
+        <div class="card-header">
+            📝 Prescription
+        </div>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger text-center">
+                @TempData["Error"]
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success text-center">
+                @TempData["Success"]
+            </div>
+        }
+
+        <div class="card-body">
+            <form method="post">
+
+                <!-- ✅ REQUIRED -->
+                <input type="hidden" asp-for="AppointmentId" />
+
+                <label>Diagnosis</label>
+                <textarea asp-for="Diagnosis" rows="3" class="form-control"></textarea>
+
+                <label>Medicines</label>
+                <textarea asp-for="Medicines" rows="3" class="form-control"></textarea>
+
+                <label>Notes</label>
+                <textarea asp-for="Notes" rows="3" class="form-control"></textarea>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <button class="btn btn-primary btn-save px-4 py-2">
+                        💾 Save
+                    </button>
+                    <a asp-action="PrescriptionHistory"
+                       asp-controller="Doctor"
+                       asp-route-appointmentId="@Model.AppointmentId"
+                       class="btn btn-outline-secondary px-4 py-2">
+                        📜 Prescription History
+                    </a>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <a asp-controller="Doctor"
+       asp-action="Availability"
+       class="btn btn-outline-primary">
+        🗓 Manage Availability
+    </a>
+
+    <!-- SUMMARY -->
+    <div class="summary mt-4">
+        <h5>📋 Appointment Summary</h5>
+        <hr />
+        <p><b>Patient:</b> @Model.PatientName</p>
+        <p><b>Doctor:</b> @Model.DoctorName</p>
+        <p><b>Date:</b> @Model.AppointmentDate.ToString("dd MMM yyyy")</p>
+        <p><b>Symptoms:</b> @Model.Symptoms</p>
+    </div>
+</div>

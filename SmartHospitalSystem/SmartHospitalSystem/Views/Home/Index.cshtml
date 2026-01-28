@@ -1,0 +1,181 @@
+﻿@{
+    ViewData["Title"] = "Smart Hospital System";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Smart Hospital System</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Glass container */
+        .glass-container {
+            width: 85%;
+            max-width: 1100px;
+            padding: 50px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+            text-align: center;
+            animation: fadeIn 1.2s ease;
+            color: white;
+        }
+
+        /* Header */
+        .logo {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 46px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+            h1 span {
+                color: #ffdd59;
+            }
+
+        .tagline {
+            font-size: 18px;
+            margin-bottom: 35px;
+            opacity: 0.9;
+        }
+
+        /* Language selector */
+        .language {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+        }
+
+            .language select {
+                padding: 6px 12px;
+                border-radius: 8px;
+                border: none;
+                font-weight: 600;
+            }
+
+        /* Cards */
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 240px;
+            padding: 30px 25px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.9);
+            color: #0f4c75;
+            text-decoration: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            animation: slideUp 0.8s ease;
+        }
+
+            .card:hover {
+                transform: translateY(-15px) scale(1.05);
+                box-shadow: 0 30px 55px rgba(0,0,0,0.35);
+            }
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @@keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+  @*   <div class="language">
+        <select>
+            <option>English</option>
+            <option>हिंदी</option>
+            <option>தமிழ்</option>
+            <option>മലയാളം</option>
+        </select>
+    </div> *@
+
+    <div class="glass-container">
+
+        <!-- Hospital Logo -->
+        <div class="logo">🏥</div>
+
+        <h1>SMART <span>HOSPITAL SYSTEM</span></h1>
+        <div class="tagline">Digital • Secure • Intelligent Healthcare Platform</div>
+
+        <div class="cards">
+            <a asp-controller="Admin" asp-action="Login" class="card">
+                <div class="icon">🛡️</div>
+                <h3>Admin</h3>
+                <p>Manage system, doctors, and reports</p>
+            </a>
+
+            <a asp-controller="Patient" asp-action="Register" class="card">
+                <div class="icon">🧑‍🤝‍🧑</div>
+                <h3>Patient</h3>
+                <p>Book appointments & view records</p>
+            </a>
+
+            <a asp-controller="Account" asp-action="Login" class="card">
+                <div class="icon">👨‍⚕️</div>
+                <h3>Doctor</h3>
+                <p>Consult, prescribe & manage care</p>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

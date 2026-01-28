@@ -1,0 +1,203 @@
+﻿@model Hospital_Domain.Dtos.AppointmentBookingDto
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Book Appointment";
+}
+
+<style>
+    .dashboard {
+        max-width: 600px;
+        margin: 40px auto;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .dashboard h2 {
+            color: #0f4c75;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+    .card {
+        background: #f4f9ff;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(0,0,0,.1);
+    }
+
+        .card label {
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .card input, .card select, .card textarea {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+    .slot-box {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border: 1px solid #d0e6f7;
+        cursor: pointer;
+    }
+
+        .slot-box:hover {
+            background: #e7f5ff;
+        }
+
+    .btn-primary {
+        background: #0f4c75;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 20px;
+        margin-right: 10px;
+    }
+
+        .btn-primary:hover {
+            background: #0077b6;
+        }
+
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+        border-radius: 8px;
+        padding: 10px 20px;
+    }
+</style>
+
+<div class="dashboard">
+    <h2>📅 Book Appointment</h2>
+
+    <div class="card">
+
+        <!-- STEP 1: SELECT SPECIALIZATION -->
+        <form asp-action="SelectSpecialization" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label>Select Specialization</label>
+                <select asp-for="Specialization" class="form-select" required>
+                    <option value="">-- Select Specialization --</option>
+                    @foreach (var spec in ViewBag.Specializations)
+                    {
+                        <option value="@spec">@spec</option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Next</button>
+        </form>
+
+        <!-- STEP 2: SELECT DOCTOR -->
+        @if (ViewBag.Doctors != null)
+        {
+            <hr />
+
+            <form asp-action="SelectDoctor" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Specialization" />
+
+                <div class="mb-3">
+                    <label>Select Doctor</label>
+                    <select asp-for="DoctorId" class="form-select" required>
+                        <option value="">-- Select Doctor --</option>
+                        @foreach (var d in ViewBag.Doctors)
+                        {
+                            <option value="@d.DoctorId">@d.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        }
+
+        <!-- STEP 3: SELECT DATE -->
+        @if (Model.AvailableFromDate != null)
+        {
+            <hr />
+
+            <form asp-action="LoadSlots" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="DoctorId" />
+                <input type="hidden" asp-for="Specialization" />
+
+                <div class="mb-3">
+                    <label>Doctor Availability</label>
+                    <p>
+                        📅 @Model.AvailableFromDate – @Model.AvailableToDate <br />
+                        ⏰ @Model.AvailableFromTime – @Model.AvailableToTime
+                    </p>
+                </div>
+
+                <div class="mb-3">
+                    <label>Select Appointment Date</label>
+                    <input type="date"
+                           asp-for="AppointmentDate"
+                           class="form-control"
+                           min="@Model.AvailableFromDate"
+                           max="@Model.AvailableToDate"
+                           required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Show Available Slots
+                </button>
+            </form>
+        }
+
+        <!-- STEP 4: SELECT SLOT -->
+        @if (ViewBag.AvailableSlots != null)
+        {
+            <hr />
+
+            <form asp-action="ConfirmAppointment" method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="DoctorId" />
+                <input type="hidden" asp-for="Specialization" />
+                <input type="hidden" asp-for="AppointmentDate" />
+
+                <div class="mb-3">
+                    <label>Available Time Slots (15 Minutes)</label>
+
+                    @if (ViewBag.AvailableSlots.Count == 0)
+                    {
+                        <p class="text-danger">❌ No slots available for this date.</p>
+                    }
+                    else
+                    {
+                        @foreach (DateTime slot in ViewBag.AvailableSlots)
+                        {
+                            <label class="slot-box">
+                                <input type="radio"
+                                       name="SelectedSlot"
+                                       value="@slot"
+                                       required />
+                                ⏰ @slot.ToString("hh:mm tt")
+                            </label>
+                        }
+                    }
+                </div>
+
+                <div class="mb-3">
+                    <label>Symptoms</label>
+                    <textarea asp-for="Symptoms" class="form-control"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Book Appointment
+                </button>
+
+                <a asp-action="Profile" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+        }
+
+    </div>
+</div>

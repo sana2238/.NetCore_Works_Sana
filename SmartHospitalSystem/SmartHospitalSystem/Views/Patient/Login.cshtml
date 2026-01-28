@@ -1,0 +1,102 @@
+﻿@model Hospital_Domain.Dtos.LoginDto
+
+@{
+    ViewData["Title"] = "Patient Login";
+}
+
+<style>
+    .dashboard {
+        max-width: 500px;
+        margin: 50px auto;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .dashboard h2 {
+            color: #0f4c75;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+    .card {
+        background: #f4f9ff;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(0,0,0,.1);
+        transition: transform .2s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card label {
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .card input {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .card button {
+            background: #0f4c75;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+            .card button:hover {
+                background: #0077b6;
+            }
+
+        .card a.btn {
+            display: inline-block;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+    }
+</style>
+
+<div class="dashboard">
+    <h2>🧑‍🦽 Patient Login</h2>
+
+    <div class="card">
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            @* Validation summary for invalid login *@
+            <div class="text-danger mb-3">
+                @Html.ValidationSummary(false)
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+
+            <a asp-controller="Patient" asp-action="Register" class="btn btn-secondary">
+                New Patient? Register here
+            </a>
+        </form>
+    </div>
+</div>
+@* 
+@section Scripts {
+    @await Html.RenderPartialAsync("_ValidationScriptsPartial")
+} *@

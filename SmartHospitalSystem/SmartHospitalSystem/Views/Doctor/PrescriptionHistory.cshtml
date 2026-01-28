@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Hospital_Domain.Model.PrescriptionHistoryVm>
+
+<h3>📝 Prescription History</h3>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Date</th>
+            <th>Patient</th>
+            <th>Diagnosis</th>
+            <th>Medicines</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.CreatedOn.ToString("dd MMM yyyy hh:mm tt")</td>
+                <td>@p.PatientName</td>
+                <td>@p.Diagnosis</td>
+                <td>@p.Medicines</td>
+                <td>@p.Notes</td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+<div style="text-align:center;">
+    <a asp-controller="Doctor" asp-action="Dashboard" class="btn">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+</div>

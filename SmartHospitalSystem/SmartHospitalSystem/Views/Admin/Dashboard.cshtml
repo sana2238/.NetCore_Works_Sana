@@ -1,0 +1,189 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Admin Dashboard</title>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg,#0f4c75,#3282b8);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #0f4c75;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: #1a1a1a; /* dark text for readability */
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            }
+
+            .card h4 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .card p {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            .card a {
+                display: inline-block;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 10px;
+                font-weight: bold;
+                transition: background 0.2s;
+            }
+
+                .card a:hover {
+                    opacity: 0.9;
+                }
+
+            .card i {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+
+        /* Card colors */
+        .card-patients {
+            background: #ffe6e6; /* light red/pink */
+        }
+
+            .card-patients a {
+                background: #ff9999; /* slightly darker red for button */
+                color: #1a1a1a;
+            }
+
+        .card-doctors {
+            background: #e6fff0; /* light green */
+        }
+
+            .card-doctors a {
+                background: #66d9a6; /* slightly darker green for button */
+                color: #1a1a1a;
+            }
+
+        .card-appointments {
+            background: #e6f0ff; /* light blue */
+        }
+
+            .card-appointments a {
+                background: #66b3ff; /* slightly darker blue for button */
+                color: #1a1a1a;
+            }
+
+        /* Make cards responsive without media query */
+        /* supports (display: grid) {
+            .cards
+
+        {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        } */
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 15px 30px;
+        }
+
+        .logout-btn {
+            background: #ff4d4d;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+            .logout-btn:hover {
+                background: #e60000;
+                color: white;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>🛡️ Admin Dashboard</h2>
+
+        <div class="cards">
+            <!-- Patients Card -->
+            <div class="card card-patients">
+                <i class="fas fa-user-injured"></i>
+                <h4>🧑‍🦽 Patients</h4>
+                <p>View and manage all registered patients</p>
+                <a asp-action="AllPatients">View Patients</a>
+            </div>
+
+            <!-- Doctors Card -->
+            <div class="card card-doctors">
+                <i class="fas fa-user-md"></i>
+                <h4>🧑‍⚕️ Doctors</h4>
+                <p>View and manage all doctors</p>
+                <a asp-action="AllDoctors">View Doctors</a>
+            </div>
+
+            <!-- Appointments Card -->
+            <div class="card card-appointments">
+                <i class="fas fa-calendar-check"></i>
+                <h4>🗓️ Appointments</h4>
+                <p>View all scheduled appointments</p>
+                <a asp-action="AllAppointments">View Appointments</a>
+            </div>
+            <div class="card card-doctors" style="background:#fff0e6;">
+                <i class="fas fa-user-plus"></i>
+                <h4>➕ Doctor Registration</h4>
+                <p>Register a new doctor account</p>
+                <a asp-controller="Account" asp-action="DoctorRegister" style="background:#ffb366;color:#1a1a1a;">Register Doctor</a>
+            </div>
+        </div>
+    </div>
+    <div class="top-bar">
+        <a asp-controller="Admin" asp-action="Logout" class="logout-btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+
+</body>
+</html>
+

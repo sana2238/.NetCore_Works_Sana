@@ -1,0 +1,209 @@
+﻿@model IEnumerable<Hospital_Domain.Model.Patient>
+
+@{
+    ViewData["Title"] = "All Patients";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>All Patients</title>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 20px;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.3);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+            .search-bar input[type="text"] {
+                padding: 12px 20px;
+                width: 300px;
+                border-radius: 8px;
+                border: none;
+                font-size: 1rem;
+                margin-right: 10px;
+            }
+
+            .search-bar button {
+                padding: 12px 20px;
+                border-radius: 8px;
+                border: none;
+                font-size: 1rem;
+                background: #ff9999;
+                color: #1a1a1a;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+                .search-bar button:hover {
+                    background: #ff6666;
+                    color: white;
+                }
+
+        /* Table card */
+        .table-card {
+            background: #ffe6e6;
+            border-radius: 16px;
+            padding: 20px 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 1rem;
+        }
+
+            table thead th {
+                background: linear-gradient(90deg, #ff9999, #ff6666);
+                color: #1a1a1a;
+                padding: 16px 20px;
+                font-size: 1.1rem;
+                text-align: left;
+                letter-spacing: 0.5px;
+                border-radius: 10px 10px 0 0;
+            }
+
+            table tbody td {
+                padding: 16px 20px;
+                background: #fff0f0;
+            }
+
+            table tbody tr:hover td {
+                background: #ffd6d6;
+                transition: 0.3s;
+            }
+
+            table tbody tr:not(:last-child) td {
+                border-bottom: 1px solid #ffcccc;
+            }
+
+        /* Empty state card */
+        .empty-card {
+            background: #ffe6e6;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-top: 30px;
+        }
+
+            .empty-card i {
+                font-size: 4rem;
+                color: #ff6666;
+                margin-bottom: 20px;
+            }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 14px 30px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #1a1a1a;
+            background: #ff9999;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+
+            .btn:hover {
+                background: #ff6666;
+                color: white;
+                transform: translateY(-2px);
+            }
+
+        th i {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🧑‍🦽 All Patients</h2>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <form method="post" asp-action="AllPatients" asp-controller="Admin">
+                <input type="text" name="search" placeholder="Search by Name or Phone" value="@ViewData["Search"]" />
+                <button type="submit"><i class="fas fa-search"></i> Search</button>
+            </form>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="empty-card">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>No patients found.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-user"></i> Name</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-phone"></i> Phone</th>
+                            <th><i class="fas fa-venus-mars"></i> Gender</th>
+                            <th><i class="fas fa-birthday-cake"></i> Age</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model)
+                        {
+                            <tr>
+                                <td>@p.Name</td>
+                                <td>@p.Email</td>
+                                <td>@p.Phone</td>
+                                <td>@p.Gender</td>
+                                <td>@p.Age</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <div style="text-align:center;">
+            <a asp-controller="Admin" asp-action="Dashboard" class="btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html>

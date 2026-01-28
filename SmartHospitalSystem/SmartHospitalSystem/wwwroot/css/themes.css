@@ -1,0 +1,15 @@
+﻿.bg-blue {
+    background: linear-gradient(135deg, #0f4c75, #3282b8);
+}
+
+.bg-green {
+    background: linear-gradient(135deg, #0b8457, #2ecc71);
+}
+
+.bg-purple {
+    background: linear-gradient(135deg, #4a148c, #9c27b0);
+}
+
+.bg-dark {
+    background: linear-gradient(135deg, #232526, #414345);
+}

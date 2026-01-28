@@ -1,0 +1,29 @@
+﻿@using Hospital_Domain.Dtos
+@model List<DoctorAvailabilityDto>
+
+
+<h3>🗓 Doctor Availability</h3>
+<form method="post">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Day</th>
+<th>From</th>
+<th>To</th>
+<th>Available</th>
+</tr>
+</thead>
+<tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].DayOfWeek<input type="hidden" asp-for="@Model[i].DayOfWeek" /></td>
+                    <td><input asp-for="@Model[i].FromTime" type="time" class="form-control" /></td>
+                    <td><input asp-for="@Model[i].ToTime" type="time" class="form-control" /></td>
+                    <td><input asp-for="@Model[i].IsAvailable" type="checkbox" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class="btn btn-primary">Save</button>
+</form>

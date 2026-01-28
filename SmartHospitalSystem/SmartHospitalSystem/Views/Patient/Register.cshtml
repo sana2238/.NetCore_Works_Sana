@@ -1,0 +1,142 @@
+﻿@model Hospital_Domain.Dtos.PatientRegisterDto
+
+@{
+    ViewData["Title"] = "Patient Registration";
+}
+
+<style>
+    .dashboard {
+        max-width: 800px;
+        margin: 40px auto;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .dashboard h2 {
+            color: #0f4c75;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+    .card {
+        background: #f4f9ff;
+        padding: 25px;
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(0,0,0,.1);
+        transition: transform .2s;
+        margin-bottom: 20px;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card label {
+            font-weight: bold;
+            color: #0077b6;
+        }
+
+        .card input,
+        .card select,
+        .card textarea {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .card button {
+            background: #0f4c75;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+            .card button:hover {
+                background: #0077b6;
+            }
+
+        .card a {
+            display: inline-block;
+            margin-left: 15px;
+            color: #0f4c75;
+            text-decoration: none;
+        }
+</style>
+
+<div class="dashboard">
+    <h2>🧑‍🦽 Patient Registration</h2>
+
+    <div class="card">
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Phone"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Gender"></label>
+                    <select asp-for="Gender" class="form-select"
+                            asp-items="Html.GetEnumSelectList<Hospital_Domain.Enum.Gender>()">
+                        <option value="">-- Select Gender --</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Age"></label>
+                    <input asp-for="Age" type="number" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BloodGroup"></label>
+                    <input asp-for="BloodGroup" class="form-control" />
+                    <span asp-validation-for="BloodGroup" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Place"></label>
+                <input asp-for="Place" class="form-control" />
+                <span asp-validation-for="Place" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Address"></label>
+                <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit">Register</button>
+            <a asp-controller="Patient" asp-action="Login" class="btn btn-secondary ms-2">
+                Already have an account? Login
+            </a>
+        </form>
+    </div>
+</div>
+
+

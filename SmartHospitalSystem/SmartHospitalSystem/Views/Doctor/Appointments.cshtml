@@ -1,0 +1,223 @@
+﻿@model IEnumerable<Hospital_Domain.Model.Appointment>
+@using Hospital_Domain.Enum
+
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<style>
+    body {
+        background: #f4f6fb;
+    }
+
+    .page-container {
+        max-width: 1150px;
+        margin: 40px auto;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Card */
+    .card-wrapper {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+        color: #0f4c75;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    /* Back Button */
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 20px;
+        background: #0f4c75;
+        color: #fff;
+        padding: 8px 18px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all .25s;
+    }
+
+        .back-btn:hover {
+            background: #3282b8;
+            transform: translateX(-3px);
+        }
+
+    /* Table */
+    table {
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    thead {
+        background: linear-gradient(90deg, #0f4c75, #3282b8);
+        color: white;
+    }
+
+    th, td {
+        vertical-align: middle !important;
+        text-align: center;
+    }
+
+    tbody tr {
+        transition: all .2s ease;
+    }
+
+        tbody tr:hover {
+            background: #f0f6ff;
+            transform: scale(1.01);
+        }
+
+    /* Badges */
+    .badge {
+        padding: 7px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .Pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .Completed {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .Cancelled {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Dropdown */
+    select {
+        border-radius: 8px;
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        font-size: 13px;
+    }
+
+    /* Buttons */
+    .btn-save {
+        margin-top: 6px;
+        background: #0f4c75;
+        border: none;
+        border-radius: 8px;
+        padding: 4px 12px;
+        font-size: 13px;
+        color: white;
+    }
+
+        .btn-save:hover {
+            background: #3282b8;
+        }
+
+    .btn-prescription {
+        background: #28a745;
+        color: white;
+        border-radius: 10px;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+    }
+
+        .btn-prescription:hover {
+            background: #218838;
+        }
+</style>
+
+<div class="page-container">
+
+    <a asp-controller="Doctor"
+       asp-action="Dashboard"
+       class="back-btn">
+        <i class="fas fa-arrow-left"></i> Dashboard
+    </a>
+
+    <div class="card-wrapper">
+
+        <h2>
+            <i class="fas fa-calendar-check"></i>
+            My Appointments
+        </h2>
+
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Prescription</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <i class="fas fa-user"></i>
+                            @item.Patient.Name
+                        </td>
+
+                        <td>
+                            <i class="far fa-calendar"></i>
+                            @item.AppointmentDate.ToString("dd MMM yyyy")
+                        </td>
+
+                        <td>
+                            <span class="badge @item.Status">
+                                <i class="fas fa-circle"></i>
+                                @item.Status
+                            </span>
+                        </td>
+
+                        <td>
+                            <form asp-action="UpdateAppointmentStatus" method="post">
+                                <input type="hidden" name="id" value="@item.AppointmentId" />
+
+                                <select name="status">
+                                    <option value="Pending">Pending</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+
+                                <br />
+                                <button type="submit" class="btn-save">
+                                    <i class="fas fa-save"></i> Save
+                                </button>
+                            </form>
+                        </td>
+
+                        <td>
+                            <a asp-action="Prescription"
+                               asp-route-id="@item.AppointmentId"
+                               class="btn-prescription">
+                                <i class="fas fa-prescription-bottle-alt"></i>
+                                Add
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

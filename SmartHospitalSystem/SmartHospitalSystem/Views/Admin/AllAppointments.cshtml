@@ -1,0 +1,153 @@
+﻿@model IEnumerable<Hospital_Domain.Model.Appointment>
+
+@{
+    ViewData["Title"] = "All Appointments";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>All Appointments</title>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg,#0f4c75,#3282b8);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 20px;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.3);
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #e6f0ff; /* light blue */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            font-size: 1rem;
+        }
+
+            table th, table td {
+                padding: 16px 20px;
+                text-align: left;
+            }
+
+            table th {
+                background: #cce0ff; /* header matching card theme */
+                color: #1a1a1a;
+                font-size: 1.1rem;
+                letter-spacing: 0.5px;
+            }
+
+            table tr:nth-child(even) {
+                background: #d6e6ff; /* alternating row color */
+            }
+
+            table tr:hover {
+                background: #b3d1ff;
+                transition: 0.3s;
+            }
+
+        /* Empty state card */
+        .card {
+            background: #e6f0ff; /* light blue */
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .card i {
+                font-size: 3rem;
+                color: #3399ff;
+                margin-bottom: 15px;
+            }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #1a1a1a;
+            background: #99ccff; /* light blue button */
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+            .btn:hover {
+                background: #3399ff;
+                color: white;
+                transform: translateY(-2px);
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🗓️ All Appointments</h2>
+
+        @if (!Model.Any())
+        {
+            <div class="card">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>No appointments found.</p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user-injured"></i> Patient Name</th>
+                        <th><i class="fas fa-user-md"></i> Doctor Name</th>
+                        <th><i class="fas fa-calendar-alt"></i> Appointment Date</th>
+                        <th><i class="fas fa-notes-medical"></i> Symptoms</th>
+                        <th><i class="fas fa-info-circle"></i> Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var a in Model)
+                    {
+                        <tr>
+                            <td>@a.Patient?.Name</td>
+                            <td>@a.Doctor?.Name</td>
+                            <td>@a.AppointmentDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@a.Symptoms</td>
+                            <td>@a.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <div style="margin-top: 30px; text-align:center;">
+            <a asp-action="Dashboard" asp-controller="Admin" class="btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</body>
+</html>

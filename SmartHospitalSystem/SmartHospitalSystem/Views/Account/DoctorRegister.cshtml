@@ -1,0 +1,370 @@
+﻿@model SmartHospitalSystem.ViewModels.RegisterDoctorViewModel
+
+@{
+    ViewData["Title"] = "Doctor Registration";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Doctor Registration</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            background: #eef2f7;
+        }
+
+        .auth-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* LEFT */
+        .auth-left {
+            width: 50%;
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .left-content {
+            text-align: center;
+            max-width: 400px;
+        }
+
+            .left-content h1 {
+                font-size: 42px;
+                margin-bottom: 10px;
+            }
+
+            .left-content p {
+                font-size: 18px;
+                opacity: .9;
+            }
+
+        /* RIGHT */
+        .auth-right {
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 30px 0;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 560px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 20px 45px rgba(0,0,0,.15);
+        }
+
+            .register-card h2 {
+                text-align: center;
+                color: #0f4c75;
+                margin-bottom: 5px;
+            }
+
+            .register-card p {
+                text-align: center;
+                color: #777;
+                margin-bottom: 25px;
+            }
+
+        .section-title {
+            margin: 25px 0 10px;
+            font-weight: 700;
+            color: #0f4c75;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+            .form-group label {
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 5px;
+                display: block;
+            }
+
+        .input-icon {
+            position: relative;
+        }
+
+            .input-icon i {
+                position: absolute;
+                top: 50%;
+                left: 12px;
+                transform: translateY(-50%);
+                color: #999;
+            }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            transition: .3s;
+        }
+        .form-control.sm {
+    height: 40px;
+    padding: 8px 12px 8px 36px;
+    font-size: 14px;
+}
+
+        .date-input,
+        .time-input {
+            padding-left: 38px;
+            cursor: pointer;
+        }
+
+            .form-control:focus {
+                border-color: #3282b8;
+                box-shadow: 0 0 0 3px rgba(50,130,184,.2);
+                outline: none;
+            }
+
+        .row-2 {
+            display: flex;
+            gap: 14px;
+        }
+
+            .row-2 .form-group {
+                flex: 1;
+            }
+
+        .btn-register {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+            .btn-register:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 25px rgba(15,76,117,.4);
+            }
+
+        @@media(max - width: 992px)
+
+        {
+            .auth-left
+
+        {
+            display: none;
+        }
+
+        .auth-right {
+            width: 100%;
+        }
+
+            .file-upload input {
+                display: none;
+            }
+
+            .file-upload label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                padding: 12px;
+                border: 2px dashed #3282b8;
+                border-radius: 12px;
+                color: #0f4c75;
+                cursor: pointer;
+                font-weight: 600;
+                transition: .3s;
+            }
+
+                .file-upload label:hover {
+                    background: rgba(50,130,184,.08);
+                }
+
+            .section-title {
+                border-bottom: 1px dashed #dbe4f0;
+                padding-bottom: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <!-- LEFT -->
+        <div class="auth-left">
+            <div class="left-content">
+                <h1>Smart Hospital</h1>
+                <p>Doctor Registration Portal</p>
+                <span>Secure • Reliable • Modern Healthcare</span>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="auth-right">
+            <div class="register-card">
+
+                <h2><i class="fa-solid fa-user-doctor"></i> Doctor Registration</h2>
+                <p>Create a new doctor account</p>
+
+                <form asp-action="DoctorRegister" method="post" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label>Profile Picture</label>
+                        <div class="file-upload">
+                            <input asp-for="ProfileImage" type="file" id="profileUpload" />
+                            <label for="profileUpload">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                Upload Profile Image
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="section-title">Basic Information</div>
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-user"></i>
+                                <input asp-for="Name" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                                <input asp-for="Email" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Specialization</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-stethoscope"></i>
+                                <input asp-for="Specialization" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-phone"></i>
+                                <input asp-for="PhoneNumber" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Professional</div>
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Qualification</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <input asp-for="Qualification" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Experience (Years)</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-clock"></i>
+                                <input asp-for="ExperienceYears" type="number" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Availability</div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <input asp-for="AvailableFromDate" type="date" class="form-control date-input m-1" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-calendar-check"></i>
+                                <input asp-for="AvailableToDate" type="date" class="form-control date-input" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>From Time</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-clock"></i>
+                                <input asp-for="AvailableFromTime" type="time" class="form-control time-input" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>To Time</label>
+                            <div class="input-icon">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                                <input asp-for="AvailableToTime" type="time" class="form-control time-input" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="section-title">Security</div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
+                            <input asp-for="Password" type="password" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <div class="input-icon">
+                            <i class="fa-solid fa-lock"></i>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                        </div>
+                    </div>
+
+                    <button class="btn-register">
+                        <i class="fa-solid fa-user-plus"></i> Register Doctor
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

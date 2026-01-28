@@ -1,0 +1,56 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/* ===== GLOBAL BACKGROUND ===== */
+.app-body {
+    background: linear-gradient(135deg, #eef3ff, #f9fbff);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== NAVBAR ===== */
+.app-navbar {
+    background: linear-gradient(90deg, #0f4c75, #3282b8);
+    padding: 0.8rem 0;
+}
+
+    .app-navbar .nav-link {
+        color: #eaf6ff !important;
+        font-weight: 500;
+        margin-left: 15px;
+    }
+
+        .app-navbar .nav-link:hover {
+            color: #ffd369 !important;
+        }
+
+/* ===== CONTENT CARD ===== */
+.content-card {
+    background: #ffffff;
+    border-radius: 18px;
+    min-height: 60vh;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: transparent;
+    color: #6c757d;
+}
